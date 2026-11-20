@@ -2,6 +2,7 @@
 import Section from "./Section.astro";
 import Icon from "./Icon.astro";
 import { phones, telegram, email, address, mapUrl, hours } from "../data/site";
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL.slice(0, -1) : import.meta.env.BASE_URL;
 ---
 <Section id="visit" class="visit on-dark" label="Як нас знайти" rec="R-006">
   <div class="container visit__grid">
@@ -16,7 +17,7 @@ import { phones, telegram, email, address, mapUrl, hours } from "../data/site";
       </div>
     </div>
     <figure class="visit__photo">
-      <img src="/img/reception-800.webp" srcset="/img/reception-800.webp 800w, /img/reception-1400.webp 1400w" sizes="(min-width: 900px) 50vw, 100vw" width="1400" height="933" loading="lazy" decoding="async" alt="Адміністратори на рецепції медичного центру «Новодерм»" />
+      <img src={`${base}/img/reception-800.webp`} srcset={`${base}/img/reception-800.webp 800w, ${base}/img/reception-1400.webp 1400w`} sizes="(min-width: 900px) 50vw, 100vw" width="1400" height="933" loading="lazy" decoding="async" alt="Адміністратори на рецепції медичного центру «Новодерм»" />
     </figure>
     <div class="visit__info">
       <section aria-labelledby="v-hours">

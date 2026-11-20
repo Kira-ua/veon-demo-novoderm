@@ -2,6 +2,7 @@
 import Section from "./Section.astro";
 import Icon from "./Icon.astro";
 import { phone, telegram, hours, address } from "../data/site";
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL.slice(0, -1) : import.meta.env.BASE_URL;
 ---
 <Section id="hero" class="hero" rec="R-001">
   <div class="container hero__grid">
@@ -26,7 +27,7 @@ import { phone, telegram, hours, address } from "../data/site";
       </dl>
     </div>
     <figure class="hero__portrait">
-      <img src="/img/bilyk-500.webp" width="500" height="500" alt="Білик Леся Євгенівна, засновниця та головна лікарка центру" decoding="async" />
+      <img src={`${base}/img/bilyk-500.webp`} width="500" height="500" alt="Білик Леся Євгенівна, засновниця та головна лікарка центру" decoding="async" />
       <figcaption>Білик Леся Євгенівна<br /><span>Засновниця та головна лікарка, дерматовенеролог вищої категорії, 32 роки досвіду</span></figcaption>
     </figure>
   </div>

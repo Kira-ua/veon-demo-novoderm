@@ -2,12 +2,13 @@
 import Section from "./Section.astro";
 import FutureLink from "./FutureLink.astro";
 import { doctors, docUa } from "../data/site";
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL.slice(0, -1) : import.meta.env.BASE_URL;
 ---
 <Section id="doctors" class="doc" label="Лікарі центру" rec="R-004">
   <div class="container" data-reveal>
     <div class="doc__spread">
       <figure class="doc__portrait">
-        <img src="/img/bilyk-500.webp" width="500" height="500" loading="lazy" decoding="async" alt="Білик Леся Євгенівна, засновниця та головна лікарка центру" />
+        <img src={`${base}/img/bilyk-500.webp`} width="500" height="500" loading="lazy" decoding="async" alt="Білик Леся Євгенівна, засновниця та головна лікарка центру" />
       </figure>
       <div class="doc__text">
         <p class="eyebrow">Засновниця та головна лікарка</p>
@@ -25,7 +26,7 @@ import { doctors, docUa } from "../data/site";
     <ul class="doc__list">
       {doctors.map((d) => (
         <li class="card">
-          <img src={`/img/${d.img}.webp`} width={d.w} height={d.h} loading="lazy" decoding="async" alt={`${d.name}, ${d.role.charAt(0).toLowerCase()}${d.role.slice(1)}`} />
+          <img src={`${base}/img/${d.img}.webp`} width={d.w} height={d.h} loading="lazy" decoding="async" alt={`${d.name}, ${d.role.charAt(0).toLowerCase()}${d.role.slice(1)}`} />
           <h3 class="card__name">{d.name}</h3>
           <p class="card__role">{d.role}</p>
           {d.exp && <p class="card__exp">{d.exp}</p>}
