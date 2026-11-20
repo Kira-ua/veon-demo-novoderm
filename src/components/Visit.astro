@@ -1,0 +1,68 @@
+---
+import Section from "./Section.astro";
+import Icon from "./Icon.astro";
+import { phones, telegram, email, address, mapUrl, hours } from "../data/site";
+---
+<Section id="visit" class="visit on-dark" label="Як нас знайти" rec="R-006">
+  <div class="container visit__grid">
+    <div class="visit__main">
+      <p class="eyebrow">Як нас знайти</p>
+      <h2>Сахарова, 82<span class="dot">.</span></h2>
+      <p class="visit__addr">{address.line}<br />м. {address.city}</p>
+      <div class="visit__btns">
+        <a class="btn btn--primary" href={`tel:${phones[0].tel}`}><Icon name="phone" />Записатися: {phones[0].label}</a>
+        <a class="btn btn--ghost" href={telegram}><Icon name="telegram" />Написати в Telegram</a>
+        <a class="btn btn--ghost" href={mapUrl} target="_blank" rel="noopener"><Icon name="pin" />Маршрут на карті</a>
+      </div>
+    </div>
+    <figure class="visit__photo">
+      <img src="/img/reception-800.webp" srcset="/img/reception-800.webp 800w, /img/reception-1400.webp 1400w" sizes="(min-width: 900px) 50vw, 100vw" width="1400" height="933" loading="lazy" decoding="async" alt="Адміністратори на рецепції медичного центру «Новодерм»" />
+    </figure>
+    <div class="visit__info">
+      <section aria-labelledby="v-hours">
+        <h3 id="v-hours">Графік роботи</h3>
+        <dl class="visit__hours">
+          {hours.map((h) => <div><dt>{h.days}</dt><dd>{h.time}</dd></div>)}
+        </dl>
+      </section>
+      <section aria-labelledby="v-phones">
+        <h3 id="v-phones">Телефони</h3>
+        <ul class="visit__phones">
+          {phones.map((p) => <li><a href={`tel:${p.tel}`}>{p.label}</a>{p.note && <span class="visit__note">{p.note}</span>}</li>)}
+        </ul>
+        <a class="visit__mail" href={`mailto:${email}`}>{email}</a>
+      </section>
+      <section aria-labelledby="v-ubd">
+        <h3 id="v-ubd">Для УБД</h3>
+        <p>Перша консультація безкоштовно, знижка 10% на всі послуги та процедури.</p>
+      </section>
+    </div>
+  </div>
+</Section>
+<style>
+  :global(.visit) { background: var(--color-text); color: var(--color-bg); padding-block: var(--s6) var(--s6); }
+  .visit__grid { display: grid; gap: var(--s5); }
+  .visit__main { display: grid; gap: var(--s3); align-content: start; }
+  .visit__addr { font: 500 var(--fs-lead)/1.4 var(--font-display); }
+  .visit__btns { display: grid; gap: .75rem; margin-top: var(--s2); }
+  .visit__photo { margin: 0; }
+  .visit__photo img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); }
+  .visit__info { display: grid; gap: var(--s4); }
+  .visit__info h3 { font: 600 var(--fs-small) var(--font-body); color: rgba(243, 245, 248, .72); margin-bottom: var(--s1); letter-spacing: 0; }
+  .visit__hours { margin: 0; display: grid; gap: .25rem; font-size: 1.125rem; font-variant-numeric: tabular-nums; }
+  .visit__hours > div { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--color-hair-dark); padding: .35rem 0; max-width: 20rem; }
+  .visit__hours dd { margin: 0; }
+  .visit__phones { list-style: none; margin: 0 0 var(--s2); padding: 0; display: grid; }
+  .visit__phones a, .visit__mail { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; font: 600 1.375rem var(--font-display); font-variant-numeric: tabular-nums; }
+  .visit__mail { font: 500 1.0625rem var(--font-body); overflow-wrap: anywhere; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .visit__note { display: block; margin: -6px 0 6px; font: 400 0.875rem/1.4 var(--font-body, inherit); opacity: .8; }
+  .visit__phones a:hover, .visit__mail:hover { color: var(--color-accent-on-dark); }
+  .visit__info p { max-width: 24rem; line-height: 1.5; }
+  @media (min-width: 900px) {
+    .visit__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; row-gap: var(--s5); }
+    .visit__main { grid-column: 1 / 7; }
+    .visit__photo { grid-column: 7 / -1; grid-row: 1; align-self: stretch; }
+    .visit__photo img { height: 100%; aspect-ratio: auto; min-height: 22rem; }
+    .visit__info { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; border-top: 1px solid var(--color-hair-dark); padding-top: var(--s4); }
+  }
+</style>

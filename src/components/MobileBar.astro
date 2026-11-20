@@ -1,0 +1,12 @@
+---
+import Icon from "./Icon.astro";
+import { phone, telegram } from "../data/site";
+---
+<div class="bar on-dark">
+  <a class="btn btn--primary" href={`tel:${phone.tel}`}><Icon name="phone" />Подзвонити</a>
+  <a class="btn btn--ghost" href={telegram}><Icon name="telegram" />Telegram</a>
+</div>
+<style>
+  .bar { position: fixed; z-index: 40; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 1.3fr 1fr; gap: .5rem; padding: .5rem var(--space) calc(.5rem + env(safe-area-inset-bottom)); background: var(--color-text); border-top: 1px solid var(--color-hair-dark); }
+  @media (min-width: 900px) { .bar { display: none; } }
+</style>

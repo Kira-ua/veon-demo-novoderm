@@ -1,0 +1,45 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Requests from "../components/Requests.astro";
+import Check from "../components/Check.astro";
+import Doctors from "../components/Doctors.astro";
+import Care from "../components/Care.astro";
+import Visit from "../components/Visit.astro";
+import Footer from "../components/Footer.astro";
+import MobileBar from "../components/MobileBar.astro";
+import { phones, address, socials } from "../data/site";
+
+const title = "Новодерм — центр дерматології та косметології у Львові";
+const description = "Дерматолог, дерматоонколог, косметолог і трихолог у Львові, вул. Сахарова, 82. Перевірка родимок FotoFinder, ціни на консультації. Запис: 067 657 79 99";
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  name: "Новодерм",
+  description: "Медичний центр дерматології та косметології у Львові",
+  address: { "@type": "PostalAddress", streetAddress: address.line, addressLocality: address.city, addressCountry: "UA" },
+  telephone: phones.map((p) => p.tel),
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "19:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "09:00", closes: "17:00" },
+  ],
+  medicalSpecialty: ["Dermatology", "Gynecologic", "Surgical"],
+  sameAs: [socials.instagram, socials.facebook],
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <link slot="head" rel="preload" href="/fonts/geologica-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link slot="head" rel="preload" href="/fonts/ibm-plex-sans-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link slot="head" rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta slot="head" name="theme-color" content="#121A3A" />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <Header slot="header" />
+  <Hero />
+  <Requests />
+  <Check />
+  <Doctors />
+  <Care />
+  <Visit />
+  <Fragment slot="footer"><Footer /><MobileBar /></Fragment>
+</Base>

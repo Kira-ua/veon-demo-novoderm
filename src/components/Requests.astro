@@ -1,0 +1,83 @@
+---
+import Section from "./Section.astro";
+import Icon from "./Icon.astro";
+import FutureLink from "./FutureLink.astro";
+import { requests, phone } from "../data/site";
+---
+<Section id="requests" class="req" label="З чим до нас приходять" rec="R-002">
+  <div class="container">
+    <header class="req__head">
+      <p class="eyebrow">Покажчик запитів</p>
+      <h2>З чим до нас приходять<span class="dot">.</span></h2>
+      <p class="req__lead">Оберіть, що вас турбує, — побачите напрямок, метод і вартість там, де вона відома.</p>
+    </header>
+    <ol class="req__list" data-rec="G-R002">
+      {requests.map((r, i) => (
+        <li>
+          <details class="row">
+            <summary class="row__sum">
+              <span class="row__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <h3 class="row__q">{r.q}</h3>
+              <span class="row__m"><span class="row__area">{r.area}</span><span class="row__method">{r.method}</span></span>
+              <span class="row__p">{r.price ? <><span class="row__price">{r.price}<small> грн</small></span><span class="row__unit">{r.unit}</span></> : null}</span>
+              <span class="row__ico" aria-hidden="true"><Icon name="plus" /></span>
+            </summary>
+            <div class="row__body">
+              <p>{r.text}</p>
+              <div class="row__acts">
+                <a class="btn btn--primary" href={`tel:${phone.tel}`}>Записатися</a>
+                <FutureLink note="Розділ у розробці">Сторінка послуги</FutureLink>
+              </div>
+            </div>
+          </details>
+        </li>
+      ))}
+    </ol>
+    <p class="req__foot"><a class="btn btn--primary" href={`tel:${phone.tel}`}><Icon name="phone" />Подзвонити та записатися</a><span>Не знайшли свій запит? Опишіть його по телефону — підкажемо, до якого лікаря йти.</span></p>
+  </div>
+</Section>
+<style>
+  :global(.req) { padding-block: var(--s6); }
+  .req__head { display: grid; gap: var(--s2); max-width: 46rem; margin-bottom: var(--s5); }
+  .req__lead { font-size: var(--fs-lead); color: var(--color-muted); max-width: 36rem; }
+  .req__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-text); }
+  .req__list > li { border-bottom: 1px solid var(--color-hair); }
+  .row__sum { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; align-items: start; padding: var(--s3) 0; position: relative; transition: transform 200ms var(--ease-out); }
+  .row__sum::-webkit-details-marker { display: none; }
+  .row__n { display: none; }
+  .row__q { font-size: clamp(1.625rem, 1.1rem + 2.4vw, 3rem); line-height: 1.05; font-weight: 600; letter-spacing: -.02em; grid-column: 1; }
+  .row__m { grid-column: 1; display: grid; gap: .15rem; }
+  .row__area { font-size: var(--fs-small); font-weight: 600; color: var(--color-brand); }
+  .row__method { color: var(--color-muted); font-size: .9375rem; }
+  .row__p { grid-column: 1; display: flex; align-items: baseline; gap: .6rem; }
+  .row__price { font: 600 1.375rem/1 var(--font-display); font-variant-numeric: tabular-nums; color: var(--color-text); transition: color 200ms var(--ease-out); }
+  .row__price small { font: 500 .875rem var(--font-body); }
+  .row__unit { font-size: var(--fs-small); color: var(--color-muted); }
+  .row__ico { grid-column: 2; grid-row: 1; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--color-hair); border-radius: 50%; transition: transform 200ms var(--ease-out), background-color 200ms var(--ease-out), color 200ms var(--ease-out), border-color 200ms var(--ease-out); }
+  .row__ico :global(.ico) { width: 18px; height: 18px; }
+  .row[open] .row__ico { transform: rotate(45deg); background: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
+  .row__sum:hover .row__ico, .row__sum:focus-visible .row__ico { border-color: var(--color-accent); color: var(--color-accent); }
+  .row[open] .row__sum:hover .row__ico { color: var(--color-bg); }
+  .row__body { padding: 0 0 var(--s4); display: grid; gap: var(--s3); max-width: 44rem; }
+  .row__body p { font-size: var(--fs-lead); line-height: 1.5; }
+  .row__acts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); }
+  .req__foot { margin-top: var(--s5); display: grid; gap: var(--s2); justify-items: start; color: var(--color-muted); max-width: 40rem; }
+  @media (min-width: 900px) {
+    .row__sum { grid-template-columns: 48px minmax(0, 1.25fr) minmax(0, 1fr) 11rem 44px; gap: 0 var(--s3); align-items: center; padding: var(--s4) 0; }
+    .row__n { display: block; font: 500 .875rem var(--font-body); color: var(--color-muted); font-variant-numeric: tabular-nums; }
+    .row__q, .row__m, .row__p { grid-column: auto; }
+    .row__ico { grid-column: auto; grid-row: auto; }
+    .row__p { flex-direction: column; align-items: flex-end; gap: .25rem; text-align: right; }
+    .row__price { font-size: 1.75rem; }
+    .row__sum::before { content: ""; position: absolute; left: -22px; top: 50%; width: 10px; height: 10px; margin-top: -5px; border-radius: 50%; background: var(--color-accent); opacity: 0; transform: scale(.4); transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); }
+    .row__sum:hover, .row__sum:focus-visible { transform: translateX(8px); }
+    .row__sum:hover::before, .row__sum:focus-visible::before, .row[open] .row__sum::before { opacity: 1; transform: scale(1); }
+    .row__sum:hover .row__price, .row[open] .row__price { color: var(--color-accent); }
+    .row__body { padding-left: calc(48px + var(--s3)); }
+    .req__foot { grid-template-columns: auto 1fr; align-items: center; gap: var(--s3); max-width: none; }
+  }
+  @media (hover: none) { .row__sum:hover { transform: none; } }
+  @media (prefers-reduced-motion: no-preference) { .row[open] .row__body { animation: row-in 260ms var(--ease-out) both; } }
+  @media (prefers-reduced-motion: reduce) { .row__sum:hover, .row__sum:focus-visible { transform: none; } }
+  @keyframes row-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+</style>

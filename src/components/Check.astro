@@ -1,0 +1,57 @@
+---
+import Section from "./Section.astro";
+import Icon from "./Icon.astro";
+import { phone, telegram, devices } from "../data/site";
+---
+<Section id="check" class="check on-dark" label="Перевірка родимок" rec="R-003">
+  <div class="container check__grid" data-reveal>
+    <div class="check__text">
+      <p class="eyebrow">Дерматоонкологія</p>
+      <h2>Родимка змінилась? Перевірте її на FotoFinder<span class="dot">.</span></h2>
+      <p class="check__lead">Цифрова дерматоскопія: картування всього тіла та огляд окремих новоутворень. Результат оцінює лікар — тривожний запит не лишається без відповіді.</p>
+      <div class="check__btns">
+        <a class="btn btn--primary" href={`tel:${phone.tel}`}><Icon name="phone" />Записатися на перевірку</a>
+        <a class="btn btn--ghost" href={telegram}><Icon name="telegram" />Telegram</a>
+      </div>
+    </div>
+    <dl class="check__prices">
+      <div>
+        <dt>Картування всього тіла FotoFinder</dt>
+        <dd><span class="check__num">3 400</span><span class="check__cur">грн</span></dd>
+      </div>
+      <div>
+        <dt>Дерматоскопія 1–3 новоутворень</dt>
+        <dd><span class="check__num">+500</span><span class="check__cur">грн до консультації</span></dd>
+      </div>
+    </dl>
+    <div class="check__devices">
+      <p class="eyebrow">Обладнання центру</p>
+      <ul>{devices.map((d) => <li>{d}</li>)}</ul>
+    </div>
+  </div>
+</Section>
+<style>
+  :global(.check) { background: var(--color-text); color: var(--color-bg); padding-block: var(--s6); }
+  .check__grid { display: grid; gap: var(--s5); }
+  .check__text { display: grid; gap: var(--s3); align-content: start; }
+  .check__text h2 { max-width: 16ch; }
+  .check__lead { font-size: var(--fs-lead); color: rgba(243, 245, 248, .82); max-width: 34rem; }
+  .check__btns { display: grid; gap: .75rem; margin-top: var(--s2); }
+  .check__prices { margin: 0; display: grid; gap: var(--s4); align-content: start; }
+  .check__prices > div { border-top: 1px solid var(--color-hair-dark); padding-top: var(--s2); display: grid; gap: var(--s1); }
+  .check__prices dt { font-size: var(--fs-small); color: rgba(243, 245, 248, .72); }
+  .check__prices dd { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: .5rem .75rem; }
+  .check__num { font: 700 clamp(3.5rem, 1.5rem + 8vw, 8rem)/.95 var(--font-display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; color: var(--color-accent-on-dark); }
+  .check__cur { font: 500 1.125rem var(--font-body); color: rgba(243, 245, 248, .82); }
+  .check__devices { display: grid; gap: var(--s2); }
+  .check__devices ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-size: 1.0625rem; }
+  .check__devices li { position: relative; }
+  .check__devices li:not(:last-child)::after { content: "·"; position: absolute; right: -1rem; color: var(--color-accent-on-dark); }
+  @media (min-width: 900px) {
+    .check__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; row-gap: var(--s5); }
+    .check__text { grid-column: 1 / 7; }
+    .check__btns { grid-template-columns: auto auto; justify-content: start; }
+    .check__prices { grid-column: 8 / -1; align-self: center; }
+    .check__devices { grid-column: 1 / -1; border-top: 1px solid var(--color-hair-dark); padding-top: var(--s3); grid-template-columns: 14rem 1fr; align-items: baseline; }
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+import FutureLink from "./FutureLink.astro";
+import Icon from "./Icon.astro";
+import { phone } from "../data/site";
+const anchors = [
+  ["#requests", "З чим звертаються"], ["#check", "Родимки"], ["#doctors", "Лікарі"], ["#care", "Догляд"], ["#visit", "Контакти"],
+];
+const note = "Розділ у розробці";
+---
+<header class="hd">
+  <div class="hd__in container">
+    <a class="wordmark" href="#top" aria-label="Новодерм — на початок сторінки">НОВО<span class="wordmark__d">D</span>ЕРМ<span class="dot">.</span></a>
+    <nav class="hd__nav" aria-label="Розділи сторінки">
+      <ul>
+        {anchors.map(([href, label]) => <li><a href={href}>{label}</a></li>)}
+        <li class="hd__future"><FutureLink note={note}>Послуги та ціни</FutureLink></li>
+      </ul>
+    </nav>
+    <div class="hd__act">
+      <a class="hd__phone" href={`tel:${phone.tel}`}>{phone.label}</a>
+      <a class="btn btn--primary hd__cta" href={`tel:${phone.tel}`} data-rec="R-001">Записатися</a>
+    </div>
+    <details class="menu" id="menu">
+      <summary class="menu__btn"><span class="visually-hidden">Меню</span><span class="menu__bars" aria-hidden="true"></span></summary>
+      <div class="menu__panel on-dark">
+        <div class="menu__contact">
+          <a class="btn btn--primary" href={`tel:${phone.tel}`}><Icon name="phone" />{phone.label}</a>
+          <a class="btn btn--ghost" href="https://t.me/+380676577999"><Icon name="telegram" />Написати в Telegram</a>
+        </div>
+        <ul class="menu__list">
+          {anchors.map(([href, label]) => <li><a href={href}>{label}</a></li>)}
+        </ul>
+        <ul class="menu__future">
+          <li><FutureLink note={note}>Послуги та ціни</FutureLink></li>
+          <li><FutureLink note={note}>Блог</FutureLink></li>
+          <li><FutureLink note={note}>Магазин</FutureLink></li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</header>
+<style>
+  .hd { position: sticky; top: 0; z-index: 50; height: var(--header-h); background: rgba(243, 245, 248, .96); border-bottom: 1px solid var(--color-hair); }
+  .hd__in { height: 100%; display: flex; align-items: center; gap: var(--s3); }
+  .wordmark { font: 600 1.375rem/1 var(--font-display); letter-spacing: .06em; text-decoration: none; color: var(--color-brand); margin-right: auto; white-space: nowrap; }
+  .wordmark .dot { font-size: 1.15em; }
+  .hd__nav { display: none; }
+  .hd__nav ul { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; align-items: center; }
+  .hd__nav a { text-decoration: none; font-size: .9375rem; font-weight: 500; padding: .5rem 0; position: relative; }
+  .hd__nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: .1rem; height: 1px; background: var(--color-accent); transform: scaleX(0); transform-origin: left; transition: transform 200ms var(--ease-out); }
+  .hd__nav a:hover::after, .hd__nav a:focus-visible::after { transform: scaleX(1); }
+  .hd__future { display: none; font-size: .9375rem; }
+  .hd__act { display: none; align-items: center; gap: var(--s3); }
+  .hd__phone { font-weight: 600; text-decoration: none; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .hd__phone:hover { color: var(--color-brand); }
+  .hd__cta { min-height: 44px; padding: 0 1.25rem; }
+  .menu__btn { list-style: none; display: grid; place-items: center; width: 48px; height: 48px; cursor: pointer; border-radius: var(--radius); margin-right: -.5rem; }
+  .menu__btn::-webkit-details-marker { display: none; }
+  .menu__bars { position: relative; width: 24px; height: 0; }
+  .menu__bars::before, .menu__bars::after { content: ""; position: absolute; left: 0; width: 24px; height: 2px; background: var(--color-text); transition: transform 200ms var(--ease-out), top 200ms var(--ease-out); }
+  .menu__bars::before { top: -4px; }
+  .menu__bars::after { top: 4px; }
+  .menu[open] .menu__bars::before { top: -1px; transform: rotate(45deg); }
+  .menu[open] .menu__bars::after { top: -1px; transform: rotate(-45deg); }
+  .menu__panel { position: fixed; inset: var(--header-h) 0 0 0; background: var(--color-text); color: var(--color-bg); padding: var(--s4) var(--space) calc(var(--s4) + var(--bar-h)); overflow-y: auto; display: flex; flex-direction: column; gap: var(--s4); }
+  .menu__contact { display: grid; gap: .75rem; }
+  .menu__list, .menu__future { list-style: none; margin: 0; padding: 0; display: grid; }
+  .menu__list a { display: block; font: 600 1.75rem/1.2 var(--font-display); text-decoration: none; padding: .7rem 0; border-bottom: 1px solid var(--color-hair-dark); }
+  .menu__future { gap: .9rem; font-size: 1.0625rem; }
+  @media (min-width: 1100px) {
+    .hd__nav { display: block; }
+    .hd__act { display: flex; }
+    .menu { display: none; }
+    .hd__in { gap: 2.5rem; }
+  }
+  @media (min-width: 1280px) { .hd__future { display: block; } .hd__nav ul { gap: 1.75rem; } }
+</style>
+<script>
+  // Close the full-screen menu after choosing an anchor or pressing Escape.
+  const menu = document.getElementById("menu") as HTMLDetailsElement | null;
+  if (menu) {
+    menu.addEventListener("click", (e) => { if ((e.target as HTMLElement).closest("a")) menu.open = false; });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.open) { menu.open = false; menu.querySelector("summary")?.focus(); } });
+  }
+</script>

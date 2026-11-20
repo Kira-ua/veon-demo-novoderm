@@ -1,0 +1,55 @@
+---
+import FutureLink from "./FutureLink.astro";
+import { phone, email, socials, address, telegram } from "../data/site";
+---
+<footer class="ft on-dark">
+  <div class="container ft__grid">
+    <div class="ft__brand">
+      <a class="ft__mark" href="#top" aria-label="Новодерм — на початок сторінки">НОВО<span>D</span>ЕРМ<span class="dot">.</span></a>
+      <p>Медичний центр дерматології та косметології у Львові. Шкіра говорить про все.</p>
+    </div>
+    <div class="ft__col">
+      <h2 class="ft__h">Контакти</h2>
+      <ul>
+        <li><a href={`tel:${phone.tel}`}>{phone.label}</a></li>
+        <li><a href={telegram}>Telegram</a></li>
+        <li><a href={`mailto:${email}`}>{email}</a></li>
+        <li>{address.line}, {address.city}</li>
+      </ul>
+    </div>
+    <div class="ft__col">
+      <h2 class="ft__h">Ми в мережі</h2>
+      <ul>
+        <li><a href={socials.instagram} target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href={socials.facebook} target="_blank" rel="noopener">Facebook</a></li>
+      </ul>
+    </div>
+    <div class="ft__col">
+      <h2 class="ft__h">Пов'язані проєкти</h2>
+      <ul>
+        <li><FutureLink note="Розділ у розробці">Клініка Персона Люкс</FutureLink></li>
+        <li><FutureLink note="Розділ у розробці">Стоматологія Персона Люкс</FutureLink></li>
+        <li><FutureLink note="Розділ у розробці">Школа Персона Люкс</FutureLink></li>
+        <li><FutureLink note="Розділ у розробці">Блог</FutureLink></li>
+        <li><FutureLink note="Розділ у розробці">Магазин</FutureLink></li>
+      </ul>
+    </div>
+  </div>
+  <p class="container ft__legal">© Медичний центр «Новодерм», Львів. Інформація на сайті не замінює консультацію лікаря.</p>
+</footer>
+<style>
+  .ft { background: var(--color-text); color: var(--color-bg); padding-top: var(--s5); padding-bottom: calc(var(--s4) + var(--bar-h)); border-top: 1px solid var(--color-hair-dark); }
+  .ft__grid { display: grid; gap: var(--s4); }
+  .ft__mark { font: 600 1.75rem/1 var(--font-display); letter-spacing: .06em; text-decoration: none; }
+  .ft__brand { display: grid; gap: var(--s2); align-content: start; }
+  .ft__brand p { color: rgba(243, 245, 248, .72); max-width: 22rem; }
+  .ft__h { font: 600 var(--fs-small) var(--font-body); color: rgba(243, 245, 248, .72); margin-bottom: var(--s2); }
+  .ft__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem; }
+  .ft__col a { text-decoration: none; display: inline-flex; min-height: 24px; overflow-wrap: anywhere; }
+  .ft__col a:hover { color: var(--color-accent-on-dark); text-decoration: underline; }
+  .ft__legal { margin-top: var(--s5); padding-top: var(--s3); border-top: 1px solid var(--color-hair-dark); font-size: var(--fs-small); color: rgba(243, 245, 248, .72); }
+  @media (min-width: 900px) {
+    .ft { padding-bottom: var(--s4); }
+    .ft__grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; column-gap: 24px; }
+  }
+</style>
